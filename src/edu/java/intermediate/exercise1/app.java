@@ -7,9 +7,12 @@ import edu.java.intermediate.exercise1.creation.structural.adapter.AudioSystem;
 import edu.java.intermediate.exercise1.creation.structural.adapter.MonoAudioSystem;
 import edu.java.intermediate.exercise1.creation.structural.adapter.StereoAudioSystem;
 import edu.java.intermediate.exercise1.creation.structural.adapter.StereoMonoAudioSystemWrapper;
-import edu.java.intermediate.exercise1.creation.structural.composite.AbstractComponent;
+import edu.java.intermediate.exercise1.creation.structural.behavior.observer.DesktopWalletClientObserver;
+import edu.java.intermediate.exercise1.creation.structural.behavior.observer.MovilePhoneWalletClientObserver;
+import edu.java.intermediate.exercise1.creation.structural.behavior.observer.Wallet;
 import edu.java.intermediate.exercise1.creation.structural.composite.CompositeComponent;
 import edu.java.intermediate.exercise1.creation.structural.composite.ConcreteComponent;
+import edu.java.intermediate.exercise1.creation.structural.decorator.*;
 
 public class app {
     public static void main(String[] args) {
@@ -63,7 +66,7 @@ public class app {
         //composite pattern
 
         CompositeComponent root = new CompositeComponent("root", "root");
-        
+
         CompositeComponent branch1 = new CompositeComponent("branch1", "branch");
         branch1.add(new ConcreteComponent("hoja1", "hoja"));
         branch1.add(new ConcreteComponent("hoja2", "hoja"));
@@ -78,6 +81,28 @@ public class app {
         System.out.println(root.countByType("hoja"));
         System.out.println(branch1.countByType("hoja"));
         System.out.println(branch2.countByType("hoja"));
+
+        // decorator pattern
+
+        Forma circulo = new Circulo();
+        Forma cuadrado = new Cuadrado();
+        Forma triangulo = new Triangulo();
+
+        circulo.mostrar();
+        cuadrado.mostrar();
+        triangulo.mostrar();
+
+        Forma circuloVerde = new CirculoVerdeBorde((Circulo) circulo);
+        circuloVerde.mostrar();
+
+        // behavior pattern
+        Wallet wallet = new Wallet();
+
+        new DesktopWalletClientObserver(wallet);
+        new MovilePhoneWalletClientObserver(wallet);
+
+        wallet.setAmount(5000);
+        wallet.setAmount(10000);
 
     }
 }
